@@ -1,0 +1,9 @@
+CREATE TABLE login (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL
+);
+
+INSERT INTO login (username, password, role) VALUES
+('Fox', '$2a$10$A.4CaWL4Ez5.ujky5pCJqOzAsMgAfUFRgLJveNCi04NZSZ7Eao8tG', 'ADMIN');

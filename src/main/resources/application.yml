@@ -1,0 +1,46 @@
+# app
+spring:
+  application:
+    name: spring-user
+  mvc:
+    problemdetails:
+      enabled: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+    platform: h2
+    initialization-mode: always
+    h2:
+      console:
+        enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
+# user
+user:
+  address-provider:
+    uri: https://opencep.com/v1/{cep}
+
+# api documentation
+springdoc:
+  override-with-generic-response: true
+  swagger-ui:
+    path: /doc.html
+  api-docs:
+    resolve-schema-properties: true
+
+# security
+security:
+  token:
+    secret: ${SECRET:mysecret}
+    expiration-date-offset: -03:00
+    issuer: spring-user
