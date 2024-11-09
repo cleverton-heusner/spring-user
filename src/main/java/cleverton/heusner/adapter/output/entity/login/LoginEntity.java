@@ -1,4 +1,4 @@
-package cleverton.heusner.adapter.output.entity;
+package cleverton.heusner.adapter.output.entity.login;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-import static cleverton.heusner.adapter.output.entity.Role.ADMIN;
+import static cleverton.heusner.adapter.output.entity.login.Role.ADMIN;
 
 @Entity
 @Table(name = "login")

@@ -4,8 +4,8 @@ import cleverton.heusner.domain.exception.BusinessException;
 import cleverton.heusner.domain.exception.ExistingResourceException;
 import cleverton.heusner.domain.exception.ResourceNotFoundException;
 import cleverton.heusner.domain.model.User;
-import cleverton.heusner.domain.service.login.LoginService;
 import cleverton.heusner.domain.service.user.UserServiceImpl;
+import cleverton.heusner.port.input.component.LoginContextComponent;
 import cleverton.heusner.port.output.provider.address.AddressProvider;
 import cleverton.heusner.port.output.provider.user.UserProvider;
 import cleverton.heusner.port.shared.LoggerComponent;
@@ -45,7 +45,7 @@ public class UserServiceImplTest {
     private LoggerComponent loggerComponent;
 
     @Mock
-    private LoginService loginService;
+    private LoginContextComponent loginContext;
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
@@ -218,7 +218,7 @@ public class UserServiceImplTest {
         when(userProvider.findById(Long.valueOf(userId))).thenReturn(Optional.of(ativeUser));
         when(userProvider.save(ativeUser)).thenReturn(ativeUser);
         doNothing().when(loggerComponent).info(anyString(), any(Object[].class));
-        when(loginService.retrieveLoginUsername()).thenReturn("loginUserName");
+        when(loginContext.getUserName()).thenReturn("loginUserName");
 
         // Act
         final boolean actualActivation = userServiceImpl.activateOrDeactivateById(userId, expectedActivation).isActive();
@@ -229,7 +229,7 @@ public class UserServiceImplTest {
         verify(userProvider).findById(Long.valueOf(userId));
         verify(userProvider).save(ativeUser);
         verify(loggerComponent, times(2)).info(anyString(), any(Object[].class));
-        verify(loginService).retrieveLoginUsername();
+        verify(loginContext).getUserName();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package cleverton.heusner.adapter.input.request.login;
 
-import cleverton.heusner.adapter.output.entity.Role;
+import cleverton.heusner.adapter.output.entity.login.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.validation.annotation.Validated;

@@ -1,6 +1,6 @@
-package cleverton.heusner.adapter.output.configuration.security;
+package cleverton.heusner.adapter.input.configuration.security;
 
-import cleverton.heusner.adapter.output.entity.LoginEntity;
+import cleverton.heusner.adapter.output.entity.login.LoginEntity;
 import cleverton.heusner.port.shared.LoggerComponent;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

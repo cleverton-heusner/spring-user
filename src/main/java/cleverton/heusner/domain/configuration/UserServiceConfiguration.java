@@ -1,7 +1,7 @@
 package cleverton.heusner.domain.configuration;
 
-import cleverton.heusner.domain.service.login.LoginService;
 import cleverton.heusner.domain.service.user.UserServiceImpl;
+import cleverton.heusner.port.input.component.LoginContextComponent;
 import cleverton.heusner.port.input.service.user.UserService;
 import cleverton.heusner.port.output.provider.address.AddressProvider;
 import cleverton.heusner.port.output.provider.user.UserProvider;
@@ -18,7 +18,13 @@ public class UserServiceConfiguration {
                                    final AddressProvider addressProvider,
                                    final MessageComponent messageComponent,
                                    final LoggerComponent loggerComponent,
-                                   final LoginService loginService) {
-        return new UserServiceImpl(userProvider, addressProvider, messageComponent, loggerComponent, loginService);
+                                   final LoginContextComponent authenticationContext) {
+        return new UserServiceImpl(
+                userProvider,
+                addressProvider,
+                messageComponent,
+                loggerComponent,
+                authenticationContext
+        );
     }
 }

@@ -1,4 +1,4 @@
-package cleverton.heusner.adapter.output.entity;
+package cleverton.heusner.adapter.output.entity.user;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

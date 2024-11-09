@@ -1,4 +1,4 @@
-package cleverton.heusner.adapter.output.entity;
+package cleverton.heusner.adapter.output.entity.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

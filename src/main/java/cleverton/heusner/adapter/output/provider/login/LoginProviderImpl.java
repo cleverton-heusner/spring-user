@@ -1,33 +1,35 @@
-package cleverton.heusner.domain.service.login;
+package cleverton.heusner.adapter.output.provider.login;
 
 import cleverton.heusner.adapter.output.entity.login.LoginEntity;
-import cleverton.heusner.port.input.service.login.LoginService;
+import cleverton.heusner.adapter.output.repository.LoginRepository;
 import cleverton.heusner.port.output.provider.login.LoginProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class LoginServiceImpl implements LoginService {
+@Service
+public class LoginProviderImpl implements LoginProvider {
 
-    private final LoginProvider loginProvider;
+    private final LoginRepository loginRepository;
 
-    public LoginServiceImpl(final LoginProvider loginProvider) {
-        this.loginProvider = loginProvider;
+    public LoginProviderImpl(final LoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        return loginProvider.loadUserByUsername(username);
+        return loginRepository.findByUsername(username);
     }
 
     @Override
     public LoginEntity register(final LoginEntity loginEntity) {
-        return loginProvider.register(loginEntity);
+        return loginRepository.save(loginEntity);
     }
 
     @Override
     public List<LoginEntity> findAll() {
-        return loginProvider.findAll();
+        return loginRepository.findAll();
     }
 }

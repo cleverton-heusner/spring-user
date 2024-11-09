@@ -1,6 +1,6 @@
 package cleverton.heusner.adapter.output.provider.user;
 
-import cleverton.heusner.adapter.output.entity.UserEntity;
+import cleverton.heusner.adapter.output.entity.user.UserEntity;
 import cleverton.heusner.adapter.output.mapper.UserEntityMapper;
 import cleverton.heusner.adapter.output.repository.UserRepository;
 import cleverton.heusner.domain.model.User;

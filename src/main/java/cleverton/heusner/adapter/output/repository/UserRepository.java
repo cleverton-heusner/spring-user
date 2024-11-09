@@ -1,6 +1,6 @@
 package cleverton.heusner.adapter.output.repository;
 
-import cleverton.heusner.adapter.output.entity.UserEntity;
+import cleverton.heusner.adapter.output.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

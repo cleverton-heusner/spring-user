@@ -1,6 +1,6 @@
-package cleverton.heusner.adapter.output.configuration.security;
+package cleverton.heusner.adapter.input.configuration.security;
 
-import cleverton.heusner.domain.service.login.LoginService;
+import cleverton.heusner.port.input.service.login.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

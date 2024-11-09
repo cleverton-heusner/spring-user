@@ -1,6 +1,6 @@
 package cleverton.heusner.adapter.output.mapper;
 
-import cleverton.heusner.adapter.output.entity.UserEntity;
+import cleverton.heusner.adapter.output.entity.user.UserEntity;
 import cleverton.heusner.domain.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,11 +1,11 @@
 package cleverton.heusner.adapter.input.controller;
 
+import cleverton.heusner.adapter.input.configuration.security.TokenService;
 import cleverton.heusner.adapter.input.request.login.LoginAuthenticationRequest;
 import cleverton.heusner.adapter.input.request.login.LoginRegisterRequest;
 import cleverton.heusner.adapter.input.request.login.TokenResponse;
-import cleverton.heusner.adapter.output.configuration.security.TokenService;
-import cleverton.heusner.adapter.output.entity.LoginEntity;
-import cleverton.heusner.adapter.output.repository.LoginRepository;
+import cleverton.heusner.adapter.output.entity.login.LoginEntity;
+import cleverton.heusner.port.input.service.login.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,14 +45,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
-    private final LoginRepository loginRepository;
+    private final LoginService loginService;
     private final TokenService tokenService;
 
     public LoginController(final AuthenticationManager authenticationManager,
-                           final LoginRepository loginRepository,
+                           final LoginService loginService,
                            final TokenService tokenService) {
         this.authenticationManager = authenticationManager;
-        this.loginRepository = loginRepository;
+        this.loginService = loginService;
         this.tokenService = tokenService;
     }
 
@@ -87,7 +87,7 @@ public class LoginController {
     )
     @PostMapping("register")
     public ResponseEntity<Void> register(@RequestBody @Valid LoginRegisterRequest loginRequest) {
-        if (loginRepository.findByUsername(loginRequest.username()) != null) {
+        if (loginService.loadUserByUsername(loginRequest.username()) != null) {
             return ResponseEntity.badRequest().build() ;
         }
 
@@ -96,7 +96,7 @@ public class LoginController {
                 encryptPassword(loginRequest.password()),
                 loginRequest.role()
         );
-        loginRepository.save(loginEntity);
+        loginService.register(loginEntity);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -121,6 +121,6 @@ public class LoginController {
     })
     @GetMapping
     public ResponseEntity<List<LoginEntity>> findAll() {
-        return ResponseEntity.ok(loginRepository.findAll());
+        return ResponseEntity.ok(loginService.findAll());
     }
 }

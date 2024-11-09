@@ -1,6 +1,6 @@
 package cleverton.heusner.adapter.output.configuration;
 
-import cleverton.heusner.domain.exception.BusinessException;
+import cleverton.heusner.domain.exception.ResourceNotFoundException;
 import io.github.resilience4j.core.IntervalFunction;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
@@ -29,7 +29,7 @@ public class AddressProviderConfiguration {
         final RetryConfig retryConfig = RetryConfig.custom()
                 .maxAttempts(MAX_TRIES)
                 .intervalFunction(IntervalFunction.ofExponentialBackoff(INITIAL_WAIT_IN_MLS, BACKOFF_FACTOR))
-                .ignoreExceptions(BusinessException.class)
+                .ignoreExceptions(ResourceNotFoundException.class)
                 .build();
 
         return RetryRegistry.of(retryConfig);

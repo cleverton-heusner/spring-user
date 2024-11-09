@@ -4,7 +4,7 @@ import cleverton.heusner.domain.exception.BusinessException;
 import cleverton.heusner.domain.exception.ExistingResourceException;
 import cleverton.heusner.domain.exception.ResourceNotFoundException;
 import cleverton.heusner.domain.model.User;
-import cleverton.heusner.domain.service.login.LoginService;
+import cleverton.heusner.port.input.component.LoginContextComponent;
 import cleverton.heusner.port.input.service.user.UserService;
 import cleverton.heusner.port.output.provider.address.AddressProvider;
 import cleverton.heusner.port.output.provider.user.UserProvider;
@@ -23,19 +23,18 @@ public class UserServiceImpl implements UserService {
     private final AddressProvider addressProvider;
     private final MessageComponent messageComponent;
     private final LoggerComponent logger;
-    private final LoginService loginService;
+    private final LoginContextComponent loginContext;
 
     public UserServiceImpl(final UserProvider userProvider,
                            final AddressProvider addressProvider,
                            final MessageComponent messageComponent,
                            final LoggerComponent logger,
-                           final LoginService loginService) {
-
+                           final LoginContextComponent loginContext) {
         this.userProvider = userProvider;
         this.addressProvider = addressProvider;
         this.messageComponent = messageComponent;
         this.logger = logger;
-        this.loginService = loginService;
+        this.loginContext = loginContext;
     }
 
     @Override
@@ -80,7 +79,7 @@ public class UserServiceImpl implements UserService {
         validateUserDuplicityForRegister(user);
 
         user.setActive(true);
-        user.getUserAuditingData().setRegisterUser(loginService.retrieveLoginUsername());
+        user.getUserAuditingData().setRegisterUser(loginContext.getUserName());
         user.getUserAuditingData().setRegisterDateTime(LocalDateTime.now());
         user.setAddress(addressProvider.getAddressByZipCode(user.getAddress()));
 
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
             oldUser.setName(newUser.getName());
             oldUser.setBirthDate(newUser.getBirthDate());
             oldUser.setAddress(addressProvider.getAddressByZipCode(newUser.getAddress()));
-            oldUser.getUserAuditingData().setLastUpdateUser(loginService.retrieveLoginUsername());
+            oldUser.getUserAuditingData().setLastUpdateUser(loginContext.getUserName());
             oldUser.getUserAuditingData().setLastUpdateDateTime(LocalDateTime.now());
 
             return userProvider.save(oldUser);
@@ -166,11 +165,11 @@ public class UserServiceImpl implements UserService {
     private void setActivationOrDeactivationUserAndDateTime(final boolean activation, final User user) {
         final var now = LocalDateTime.now();
         if (activation) {
-            user.getUserAuditingData().setActivationUser(loginService.retrieveLoginUsername());
+            user.getUserAuditingData().setActivationUser(loginContext.getUserName());
             user.getUserAuditingData().setActivationDateTime(now);
         }
         else {
-            user.getUserAuditingData().setDeactivationUser(loginService.retrieveLoginUsername());
+            user.getUserAuditingData().setDeactivationUser(loginContext.getUserName());
             user.getUserAuditingData().setDeactivationDateTime(now);
         }
     }

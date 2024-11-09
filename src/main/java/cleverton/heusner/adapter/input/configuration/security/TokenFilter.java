@@ -1,4 +1,4 @@
-package cleverton.heusner.adapter.output.configuration.security;
+package cleverton.heusner.adapter.input.configuration.security;
 
 import cleverton.heusner.adapter.output.repository.LoginRepository;
 import jakarta.servlet.FilterChain;
