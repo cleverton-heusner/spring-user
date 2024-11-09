@@ -19,20 +19,20 @@ public class TokenService {
     private final String tokenSecret;
     private final String tokenExpirationDateOffset;
     private final String tokenIssuer;
-    private final LoggerComponent loggerComponent;
+    private final LoggerComponent logger;
 
     public TokenService(@Value("${security.token.secret}") final String tokenSecret,
                         @Value("${security.token.expiration-date-offset}") final String tokenExpirationDateOffset,
                         @Value("${security.token.issuer}") final String tokenIssuer,
-                        final LoggerComponent loggerComponent) {
+                        final LoggerComponent logger) {
         this.tokenSecret = tokenSecret;
         this.tokenExpirationDateOffset = tokenExpirationDateOffset;
         this.tokenIssuer = tokenIssuer;
-        this.loggerComponent = loggerComponent;
+        this.logger = logger;
     }
 
     public String generateToken(final LoginEntity login) {
-        loggerComponent.info("Generating token for login with username %.", login.getUsername());
+        logger.info("Generating token.");
 
         try {
             return JWT.create()
@@ -47,6 +47,8 @@ public class TokenService {
     }
 
     public String validateToken(final String token) {
+        logger.info("Validating token.");
+
         try {
             return JWT.require(Algorithm.HMAC256(tokenSecret))
                     .withIssuer(tokenIssuer)

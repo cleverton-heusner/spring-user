@@ -1,6 +1,7 @@
 package cleverton.heusner.adapter.input.configuration.security;
 
-import cleverton.heusner.adapter.output.repository.LoginRepository;
+import cleverton.heusner.port.input.service.login.LoginService;
+import cleverton.heusner.port.shared.LoggerComponent;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,11 +19,15 @@ import java.util.Optional;
 public class TokenFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final LoginRepository loginRepository;
+    private final LoginService loginService;
+    private final LoggerComponent logger;
 
-    public TokenFilter(final TokenService tokenService, final LoginRepository loginRepository) {
+    public TokenFilter(final TokenService tokenService,
+                       final LoginService loginService,
+                       final LoggerComponent logger) {
         this.tokenService = tokenService;
-        this.loginRepository = loginRepository;
+        this.loginService = loginService;
+        this.logger = logger;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class TokenFilter extends OncePerRequestFilter {
     private void authenticateIfTokenIsValid(final HttpServletRequest request) {
         recoverToken(request).ifPresent(token -> {
             final String username = tokenService.validateToken(token);
-            final UserDetails login = loginRepository.findByUsername(username);
+            final UserDetails login = loginService.loadUserByUsername(username);
             final var authentication = new UsernamePasswordAuthenticationToken(
                     login,
                     null,
@@ -44,12 +49,14 @@ public class TokenFilter extends OncePerRequestFilter {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            logger.info("Login authenticated.");
         });
     }
 
     private Optional<String> recoverToken(final HttpServletRequest request) {
-        final String authorizationHeader = request.getHeader("Authorization");
+        logger.info("Recovering token.");
 
+        final String authorizationHeader = request.getHeader("Authorization");
         return authorizationHeader == null ?
                 Optional.empty() :
                 Optional.of(authorizationHeader.replace("Bearer ", ""));
