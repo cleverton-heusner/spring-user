@@ -106,7 +106,11 @@ public class UserServiceImpl implements UserService {
 
             oldUser.setName(newUser.getName());
             oldUser.setBirthDate(newUser.getBirthDate());
-            oldUser.setAddress(addressProvider.getAddressByZipCode(newUser.getAddress()));
+
+            if (!oldUser.getAddress().getZipCode().equals(newUser.getAddress().getZipCode())) {
+                oldUser.setAddress(addressProvider.getAddressByZipCode(newUser.getAddress()));
+            }
+
             oldUser.getUserAuditingData().setLastUpdateUser(loginContext.getUserName());
             oldUser.getUserAuditingData().setLastUpdateDateTime(LocalDateTime.now());
 
