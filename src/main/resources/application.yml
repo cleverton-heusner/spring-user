@@ -25,6 +25,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false
 
+# logging
+logging:
+  level:
+    org.springframework.web: DEBUG
+
 # user
 user:
   address-provider:

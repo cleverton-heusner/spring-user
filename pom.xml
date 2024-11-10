@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>22</java.version>
+		<logstash.logback.encoder.version>7.4</logstash.logback.encoder.version>
 		<java.jwt.version>4.4.0</java.jwt.version>
 		<flyway.version>10.20.0</flyway.version>
 		<lombok.version>1.18.30</lombok.version>
@@ -44,6 +45,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash.logback.encoder.version}</version>
 		</dependency>
 
 		<!-- Security -->
