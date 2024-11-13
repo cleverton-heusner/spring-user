@@ -2,7 +2,7 @@
 - [Spring User](#spring-user)
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)
-- [Links](#links)
+- [Testing](#testing)
 
 ## Spring User
 > Application designed for managing users.
